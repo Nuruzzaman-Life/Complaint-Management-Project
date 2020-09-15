@@ -62,17 +62,19 @@
 			<input type="text" name="Status" placeholder="Status"/><br/>
 			<button type="submit" name="sub" class="btn btn-primary" style="width: 40%;">Show Complaints</button><br/>
 		</form>
+
 		<h1>All Complaints</h1>
+		<table>
 		<div class='row text-center'>	
 			<?php
-				require_once("DBconnect.php");
+				require_once("db_connect.php");
 				if(isset($_POST['sub'])){
 					$catagory = $_POST['Catagory'];
 					$userId= $_POST['UserId'];
 					$year= $_POST['Year'];
-					$status= $_POST['status'];
+					$status= $_POST['Status'];
 
-					$query = "SELECT * FROM jobs WHERE Catagory IS NOT NULL'";
+					$query = "SELECT * FROM `comlaints` WHERE 1";
 
 					if($catagory)
 						$query = $query." AND Catagory LIKE '$catagory'";
@@ -83,23 +85,16 @@
 					if($status)
 						$query = $query." AND Status LIKE '$status'";
 
-					$query_run = mysqli_query ($connect, $query);
+					$result = mysqli_query ($mysqli, $query);
 
-					if(mysqli_num_rows($query_run) > 0){
-						while ($row = mysqli_fetch_row($query_run)){
+					if(mysqli_num_rows($result) !=0){
+						while ($row = mysqli_fetch_row($result)){
+							
 							echo
-							"<div class='card col-4 mb-3'>
-								<div class='card-body'>
-									
-									<p class='card-text'>
-										UserId: $row[2]</br>
-										Catagory: $row[1]</br>
-										Year: $row[3]</br>
-										Status: $row[4]</br>
-									</p>
-									
-								</div>
-							</div>";
+							"<h1>{$row[0]}</hi>
+							<h1>{$row[1]}</hi>
+							<h1>{$row[2]}</hi>
+							<h1>{$row[3]}</hi> <br>";
 						}
 					}
 					else{
@@ -114,7 +109,7 @@
 			?>
 		</div>
 	</div>
-
+	</table>
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
